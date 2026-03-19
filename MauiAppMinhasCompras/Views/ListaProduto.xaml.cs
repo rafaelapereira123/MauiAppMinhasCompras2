@@ -42,7 +42,6 @@ public partial class ListaProduto : ContentPage
     {
         try
         {
-            string q = e.NewTextValue;
             lista.Clear();
 
             List<Produto> tmp = await App.Db.GetAll();
