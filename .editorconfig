@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# IDE0032: Usar a propriedade auto
+dotnet_diagnostic.IDE0032.severity = suggestion
