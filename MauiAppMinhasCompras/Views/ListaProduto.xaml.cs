@@ -17,6 +17,7 @@ public partial class ListaProduto : ContentPage
     protected async override void OnAppearing()
     {
         try { 
+            lista.Clear();
         List<Produto> tmp = await App.Db.GetAll();
         tmp.ForEach(i => lista.Add(i));
     }
@@ -42,6 +43,8 @@ public partial class ListaProduto : ContentPage
     {
         try
         {
+            string q = e.NewTextValue;
+            lst_produtos.IsRefreshing = true;
             lista.Clear();
 
             List<Produto> tmp = await App.Db.GetAll();
@@ -50,6 +53,10 @@ public partial class ListaProduto : ContentPage
         catch (Exception ex)
         {
             await DisplayAlert("Ops", ex.Message, "Ok");
+        }
+        finally
+        {
+            lst_produtos.IsRefreshing = false;
         }
 
     }
@@ -95,5 +102,23 @@ public partial class ListaProduto : ContentPage
         }
         catch (Exception ex)
         { DisplayAlert("Ops", ex.Message, "Ok"); }
+    }
+
+    private async void lst_produtos_Refreshing(object sender, EventArgs e)
+    {
+        try
+        {
+            lista.Clear();
+            List<Produto> tmp = await App.Db.GetAll();
+            tmp.ForEach(i => lista.Add(i));
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "Ok");
+        }
+        finally
+        {
+            lst_produtos.IsRefreshing = false;
+        }
     }
 }
