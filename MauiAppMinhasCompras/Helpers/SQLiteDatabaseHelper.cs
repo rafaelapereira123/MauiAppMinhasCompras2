@@ -43,5 +43,12 @@ namespace MauiAppMinhasCompras.Helpers
             string sql = "SELECT * FROM Produto WHERE Descricao LIKE '%" + q + "%'";
             return _conn.QueryAsync<Produto>(sql);
         }
+
+        public Task<List<Produto>> GetProdutosPorPeriodo(DateTime dataInicio, DateTime dataFim)
+        {
+            return _conn.Table<Produto>()
+                .Where(p => p.DataCadastro >= dataInicio && p.DataCadastro <= dataFim)
+                .ToListAsync();
+        }
     }
 }
